@@ -1,0 +1,200 @@
+/* ============================================
+   Стили готовы — на уроке их менять не нужно.
+   Все классы, которые понадобятся в JS,
+   уже описаны здесь: .cart-item, .remove
+   ============================================ */
+
+:root {
+  --paper:   #E9EEEA;
+  --surface: #FFFFFF;
+  --ink:     #12211F;
+  --muted:   #5C716C;
+  --accent:  #0E7C66;
+  --rule:    #C9D3CD;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  padding: 0 20px 64px;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+/* ---------- Шапка ---------- */
+.topbar {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 22px 0;
+  border-bottom: 2px solid var(--ink);
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+}
+.logo {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+.badge {
+  margin: 0;
+  font-size: 14px;
+  color: var(--muted);
+}
+.badge span {
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+/* ---------- Сетка ---------- */
+.layout {
+  max-width: 760px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  padding-top: 32px;
+}
+@media (max-width: 620px) {
+  .layout { grid-template-columns: 1fr; gap: 32px; }
+}
+
+.section-title {
+  margin: 0 0 14px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* ---------- Каталог ---------- */
+.catalog { list-style: none; margin: 0; padding: 0; }
+
+.product {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--rule);
+}
+.product-name { flex: 1; }
+.product-price {
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+  font-size: 15px;
+}
+
+/* ---------- Кнопки ---------- */
+button {
+  font: inherit;
+  cursor: pointer;
+  border-radius: 3px;
+  transition: background .15s ease, color .15s ease;
+}
+button:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.add {
+  width: 32px;
+  height: 32px;
+  flex: 0 0 32px;
+  font-size: 18px;
+  line-height: 1;
+  background: var(--surface);
+  color: var(--accent);
+  border: 1px solid var(--accent);
+}
+.add:hover { background: var(--accent); color: #fff; }
+
+.clear {
+  padding: 7px 14px;
+  font-size: 14px;
+  background: transparent;
+  color: var(--muted);
+  border: 1px solid var(--rule);
+}
+.clear:hover { border-color: var(--ink); color: var(--ink); }
+
+.remove {
+  width: 22px;
+  height: 22px;
+  flex: 0 0 22px;
+  font-size: 14px;
+  line-height: 1;
+  background: transparent;
+  color: var(--muted);
+  border: 1px solid var(--rule);
+}
+.remove:hover { border-color: var(--ink); color: var(--ink); }
+
+/* ---------- Корзина ---------- */
+.cart {
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  padding: 18px;
+  align-self: start;
+}
+
+.cart-list { list-style: none; margin: 0; padding: 0; }
+
+/* JS создаёт вот такие <li class="cart-item"> */
+.cart-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 0;
+  border-bottom: 1px dashed var(--rule);
+  font-size: 15px;
+}
+.cart-item .name { flex: 1; }
+.cart-item .qty {
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+  font-size: 13px;
+}
+.cart-item .sum {
+  font-variant-numeric: tabular-nums;
+  min-width: 58px;
+  text-align: right;
+}
+
+.cart-empty {
+  margin: 4px 0 0;
+  color: var(--muted);
+  font-style: italic;
+  font-size: 14px;
+}
+
+.cart-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 2px solid var(--ink);
+}
+.cart-total {
+  margin: 0;
+  font-size: 15px;
+}
+.cart-total strong {
+  font-size: 20px;
+  font-variant-numeric: tabular-nums;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+}
