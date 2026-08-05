@@ -30,11 +30,17 @@ function renderCart() {
     //     cartEmpty.style.display = 'block'
     // }
 
+    let totalItem = 0
+    let totalPrice = 0
+
     cartList.innerHTML = '' // <ul></ul>
     cartEmpty.style.display = cart.length >= 1 ? 'none' : 'block'
 
     for (let i = 0; i < cart.length; i++) {
         const item = cart[i]
+
+        totalItem += item.qty
+        totalPrice += (item.price * item.qty)
 
         const li = document.createElement('li') // <li></li>
         li.className = 'cart-item'
@@ -53,6 +59,9 @@ function renderCart() {
 
         cartList.appendChild(li)
     }
+
+    cartCount.textContent = totalItem
+    cartTotal.textContent = totalPrice
 }
 
 // ШАГ 4 - Добавление товара
@@ -68,7 +77,7 @@ function addToCart(id, title, price) {
         cart.push({
             id: id,
             title: title,
-            price: price,
+            price: Number(price),
             qty: 1
         })
     }

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Живой поиск — урок 1, асинхронность</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bitter:wght@500;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="page">
+
+  <header class="head">
+    <p class="eyebrow">Урок 1 · Асинхронное программирование</p>
+    <h1>Живой поиск</h1>
+    <p class="lede">
+      Поле ищет по справочнику JavaScript, пока вы печатаете. Ваша задача — сделать так,
+      чтобы запрос уходил на сервер не на каждую букву, а один раз, когда человек закончил печатать.
+      Панель справа показывает, сколько запросов создаёт ваш код.
+    </p>
+  </header>
+
+  <main class="grid">
+
+    <!-- ЛЕВАЯ КОЛОНКА: поиск -->
+    <section class="card card--search">
+      <label class="field">
+        <span class="field__label">Поиск по справочнику</span>
+        <input
+          id="search-input"
+          type="search"
+          class="field__input"
+          placeholder="Например: таймер, массив, setTimeout…"
+          autocomplete="off"
+          spellcheck="false">
+      </label>
+
+      <p id="status" class="status" role="status" aria-live="polite"></p>
+
+      <ul id="results" class="results"></ul>
+    </section>
+
+    <!-- ПРАВАЯ КОЛОНКА: приборная панель -->
+    <aside class="card card--lab">
+      <div class="stats">
+        <div class="stat">
+          <span class="stat__num" id="key-count">0</span>
+          <span class="stat__label">нажатий клавиш</span>
+        </div>
+        <div class="stat stat--cost">
+          <span class="stat__num" id="req-count">0</span>
+          <span class="stat__label">запросов к серверу</span>
+        </div>
+        <div class="stat stat--good">
+          <span class="stat__num" id="saved">—</span>
+          <span class="stat__label">запросов сэкономлено</span>
+        </div>
+      </div>
+
+      <div class="log-head">
+        <h2>Журнал сети</h2>
+        <button id="reset" type="button" class="reset">Сбросить</button>
+      </div>
+      <ol id="log" class="log" aria-live="off">
+        <li class="log__empty">Начните печатать в поле поиска.</li>
+      </ol>
+    </aside>
+
+  </main>
+
+  <details class="task">
+    <summary>Задание</summary>
+    <div class="task__body">
+      <p><strong>Шаг 1 — посмотрите, как есть сейчас.</strong> Откройте <code>script.js</code>: наивная
+      версия уже написана. Наберите в поле слово из шести букв и посмотрите на счётчики. Шесть букв —
+      шесть запросов. Реальный сервер такого не любит.</p>
+
+      <p><strong>Шаг 2 — сделайте задержку (это главное).</strong> Пусть запрос уходит только тогда,
+      когда человек не печатал <code>400</code> мс. Каждое новое нажатие отменяет запланированный
+      запрос через <code>clearTimeout</code> и планирует новый через <code>setTimeout</code>.
+      Цель: набрать шесть букв подряд и увидеть <em>один</em> запрос.</p>
+
+      <p><strong>Шаг 3 — бонусы, если успели.</strong> Не отправлять запрос короче двух символов;
+      показывать «Ищу…» во время ожидания ответа; не показывать устаревший ответ, если пока он
+      летел, текст в поле успел измениться.</p>
+
+      <p class="task__hint">Файл <code>lab.js</code> трогать не нужно — там имитация сервера и
+      приборная панель. Всё, что вам нужно, описано в комментариях к <code>script.js</code>.</p>
+    </div>
+  </details>
+
+</div>
+
+<!-- СИГНАЛЬНАЯ ЛЕНТА: видно, что именно делает ваш код -->
+<div class="tape">
+  <div class="tape__legend">
+    <span class="key-swatch"></span> нажатие
+    <span class="req-swatch"></span> запрос
+  </div>
+  <canvas id="timeline" class="tape__canvas" width="1000" height="52"
+          aria-label="Лента событий: нажатия клавиш и запросы к серверу за последние 12 секунд"></canvas>
+  <div class="tape__scale">12 с назад · сейчас</div>
+</div>
+
+<!-- Порядок важен: сначала стенд, потом ваш код -->
+<script src="lab.js"></script>
+<script src="script.js"></script>
+<!-- Готовое решение: закомментируйте строку выше и раскомментируйте эту -->
+<!-- <script src="solution.js"></script> -->
+
+</body>
+</html>
