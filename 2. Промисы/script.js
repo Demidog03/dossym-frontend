@@ -228,27 +228,197 @@
 //    singapore — 195 мс → 'Подключение к Singapore (195ms)'
 
 // 2. Через Promise.race выведи выбранный сервер.
-const serverTokyo = new Promise((resolve)=>{
-    setTimeout(() =>{
-        resolve('Подключение к Tokyo (240ms)')
-    },240)
-})
-const serverFrankfurt = new Promise((resolve)=>{
-    setTimeout(() =>{
-        resolve('Подключение к Frankfurt (180ms)')
-    },180)
-})
-const serverVirginia = new Promise((resolve)=>{
-    setTimeout(() =>{
-        resolve('Подключение к Virginia (310ms)')
-    },310)
-})
-const serverSingapore = new Promise((resolve)=>{
-    setTimeout(() =>{
-        resolve('Подключение к Singapore (195ms)')
-    },195)
-})
+// const serverTokyo = new Promise((resolve)=>{
+//     setTimeout(() =>{
+//         resolve('Подключение к Tokyo (240ms)')
+//     },240)
+// })
+// const serverFrankfurt = new Promise((resolve)=>{
+//     setTimeout(() =>{
+//         resolve('Подключение к Frankfurt (180ms)')
+//     },180)
+// })
+// const serverVirginia = new Promise((resolve)=>{
+//     setTimeout(() =>{
+//         resolve('Подключение к Virginia (310ms)')
+//     },310)
+// })
+// const serverSingapore = new Promise((resolve)=>{
+//     setTimeout(() =>{
+//         resolve('Подключение к Singapore (195ms)')
+//     },195)
+// })
 
-Promise.race([serverTokyo, serverFrankfurt, serverSingapore, serverVirginia]).then((result)=>{
-    console.log(result)
-})
+// Promise.race([serverTokyo, serverFrankfurt, serverSingapore, serverVirginia]).then((result)=>{
+//     console.log(result)
+// })
+
+
+
+// Задание 1
+
+// function startCountdown(seconds){
+//     let time = seconds
+
+//     const timerId = setInterval(()=>{
+//        if (time > 0) {
+//         console.log (time)
+//         time--
+//        }else {
+//         console.log('Время вышло')
+//         clearInterval(timerId)
+//        }
+//     }, 1000)
+// }
+
+
+// Уровень 1 — Основы (создание и потребление промисов)
+
+// 1. Имитация загрузки профиля
+// Сценарий: дизайнер просит показать скелетон на 1.5 секунды, а бэкенда ещё нет.
+
+// Напиши fetchUser(id), которая возвращает промис и через setTimeout
+//  резолвится объектом {id: 1, name: 'Dossym', email: 'dossym@example.com'}.
+// Если id не число — промис должен реджектиться с new Error('Invalid id').
+// Вызови её, выведи имя в консоль, ошибку — в .catch.
+// ✅ Готово, когда оба сценария (успех/ошибка) отрабатывают без падения приложения.
+
+
+// const spinner = document.getElementById('spinner')
+
+// function hideLoader() {
+//     spinner.classList.add('hidden')
+// }
+// function showLoader() {
+//     spinner.classList.remove('hidden')
+// }
+
+// function fetchUser(id) {
+//     return new Promise((resolve, reject) => {
+//         setTimeout(() => {
+//             if (typeof id !== 'number') {
+//                 reject(new Error('Invalid id'))
+//             }
+//             resolve({
+//                 id: 1,
+//                 name: 'Dossym',
+//                 email: 'dossym@example.com'
+//             })
+//         }, 1500)
+//     })
+// }
+
+// showLoader()
+
+// fetchUser(3).then((user)=> {
+//     console.log(user)
+// }).catch((error)=> {
+//     console.log(error.message)
+// }).finally(()=> {
+//     hideLoader()
+// })
+
+// 2. Спиннер, который всегда исчезает
+// Сценарий: пользователи жалуются, что при ошибке сети крутилка висит вечно.
+
+// Возьми функцию из задачи 1, добавь
+//  showLoader() перед вызовом и hideLoader() так,
+//   чтобы он гасился и при успехе, и при ошибке.
+
+
+// 3. Валидация формы регистрации
+
+// Ситуация: пользователь жмёт «Зарегистрироваться».
+//  Перед отправкой на сервер нужно проверить email и пароль.
+
+// Что сделать: функция submitForm({email, password}):
+
+// если email без @ — реджект «Некорректный email»;
+// если пароль короче 8 символов — реджект «Пароль слишком короткий»;
+// иначе — имитация отправки 1500мс и резолв {status: 'ok'}.
+
+// Добавить .finally(), который в любом случае печатает «Кнопка снова активна».
+
+// function submitForm({email, password}) {
+//     return new Promise((resolve, reject) => {
+//         if (!email.includes ('@')){
+//             reject(new Error ('Некорректный email'))
+//         }
+//         if (password.length < 8) {
+//             reject(new Error ('Пароль слишком короткий'))
+//         }
+//         setTimeout(() => {
+//             console.log('ok')
+//         }, 1500)
+//     })
+// }
+
+// submitForm({email: 'fdsfds@gmail.com', password: 'fdsfdss'}).then((result) =>{
+//     console.log(result)
+// }).catch((error)=> {
+//     console.log(error.message)
+// }).finally(()=> {
+//     console.log('Кнопка снова активна.')
+// })
+
+// 5. Цепочка: пользователь → город → погода
+
+// Ситуация: нужно показать погоду в городе пользователя, 
+// но API их не связывает: сначала получаем пользователя,
+//  из него берём город, потом запрашиваем погоду.
+// { id: 1, name: 'Dossym' }
+// { id: 123, name: 'Atyrau' }
+// { id: 43, temp: '+18°C' }
+// Что сделать: три функции (getUser, getCity, getWeather), 
+// каждая возвращает промис. Собрать цепочку .then() так, 
+// чтобы результат каждой передавался в следующую,
+//  и в конце вывести строку вида «В Казани +18°C».
+
+function getUser() {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            resolve({ id: 1, name: 'Dossym' })
+        }, 1000)
+    })
+}
+
+function getCity() {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            resolve({ id: 123, name: 'Atyrau' })
+        }, 1000)
+    })
+}
+
+function getWeather() {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            resolve({ id: 43, temp: '+18°C' })
+        }, 1000)
+    })
+}
+
+const weatherInfo = {city: '', temp: '', }
+
+getUser().then(() => getUser())
+    .then((user) => getCity())
+    .then((city) => {
+        weatherInfo.city = city.name
+        return getWeather()
+    })
+    .then((weather) => {
+        weatherInfo.temp = weather.temp
+        console.log(`В ${weatherInfo.city} ${weatherInfo.temp}`)
+    })
+
+
+// Заказ → адрес доставки → расчёт стоимости
+// getOrder(orderId) → 
+// из заказа берём addressId → getAddress(addressId) 
+// → из адреса берём регион → getShippingCost(region, weight). 
+// Вывести: «Доставка в Атырау — 30000 тг».
+
+// Комбинированный (уже посложнее): карточка книги
+// getBook(isbn) → параллельно getAuthor(book.authorId) и getReviews(book.id) 
+// через Promise.all → собрать итоговый объект. 
+// Здесь цепочка и параллельность вместе — так реально и пишут.
