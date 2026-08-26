@@ -374,42 +374,42 @@
 // чтобы результат каждой передавался в следующую,
 //  и в конце вывести строку вида «В Казани +18°C».
 
-function getUser() {
-    return new Promise((resolve) => {
-        setTimeout(() => {
-            resolve({ id: 1, name: 'Dossym' })
-        }, 1000)
-    })
-}
+// function getUser() {
+//     return new Promise((resolve) => {
+//         setTimeout(() => {
+//             resolve({ id: 1, name: 'Dossym' })
+//         }, 1000)
+//     })
+// }
 
-function getCity() {
-    return new Promise((resolve) => {
-        setTimeout(() => {
-            resolve({ id: 123, name: 'Atyrau' })
-        }, 1000)
-    })
-}
+// function getCity() {
+//     return new Promise((resolve) => {
+//         setTimeout(() => {
+//             resolve({ id: 123, name: 'Atyrau' })
+//         }, 1000)
+//     })
+// }
 
-function getWeather() {
-    return new Promise((resolve) => {
-        setTimeout(() => {
-            resolve({ id: 43, temp: '+18°C' })
-        }, 1000)
-    })
-}
+// function getWeather() {
+//     return new Promise((resolve) => {
+//         setTimeout(() => {
+//             resolve({ id: 43, temp: '+18°C' })
+//         }, 1000)
+//     })
+// }
 
-const weatherInfo = {city: '', temp: '', }
+// const weatherInfo = {city: '', temp: '', }
 
-getUser().then(() => getUser())
-    .then((user) => getCity())
-    .then((city) => {
-        weatherInfo.city = city.name
-        return getWeather()
-    })
-    .then((weather) => {
-        weatherInfo.temp = weather.temp
-        console.log(`В ${weatherInfo.city} ${weatherInfo.temp}`)
-    })
+// getUser().then(() => getUser())
+//     .then((user) => getCity())
+//     .then((city) => {
+//         weatherInfo.city = city.name
+//         return getWeather()
+//     })
+//     .then((weather) => {
+//         weatherInfo.temp = weather.temp
+//         console.log(`В ${weatherInfo.city} ${weatherInfo.temp}`)
+//     })
 
 
 // Заказ → адрес доставки → расчёт стоимости
@@ -422,3 +422,43 @@ getUser().then(() => getUser())
 // getBook(isbn) → параллельно getAuthor(book.authorId) и getReviews(book.id) 
 // через Promise.all → собрать итоговый объект. 
 // Здесь цепочка и параллельность вместе — так реально и пишут.
+
+
+function getBook(isbn) {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            resolve({ id: 1, title: 'JavaScript для начинающих', authorId: 101 })
+        }, 1000)
+    })
+}
+
+function getAuthor(authorId) {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            resolve({ id: 101, name: 'Иван Иванов' })
+        }, 1000)
+    })
+}
+
+function getReviews(bookId) {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            resolve([
+                { id: 1, bookId: 1, content: 'Отличная книга!' },
+                { id: 2, bookId: 1, content: 'Очень полезно для новичков.' }
+            ])
+        }, 1000)
+    })
+}
+
+getBook('978-5-4461-1234-5').then((book) => {
+    return Promise.all([
+        getReviews(book.id),
+        getAuthor(book.authorId),
+    ])
+})
+.then(([reviews, author]) => {
+    console.log(reviews, author)
+}).catch(err => {
+    console.error(err)
+})
