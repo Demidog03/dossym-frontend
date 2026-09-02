@@ -1,0 +1,47 @@
+    <!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Каталог товаров — учебный проект на fetch</title>
+<link rel="stylesheet" href="style.css">
+<script src="script.js" defer></script>
+</head>
+
+<body>
+<div class="wrap">
+
+  <header class="head">
+    <div>
+      <h1>Каталог товаров</h1>
+      <p>Данные приходят с fakestoreapi.com.</p>
+    </div>
+    <div class="cart">В корзине: <b id="cart-count">0</b></div>
+  </header>
+
+  <!-- Панель управления. Значения этих полей читает функция render() -->
+  <div class="controls">
+    <input id="search" type="search" placeholder="Поиск по названию" aria-label="Поиск по названию">
+    <select id="category" aria-label="Категория">
+      <option value="all">Все категории</option>
+      <!-- остальные <option> добавит JS, когда узнает категории из API -->
+    </select>
+    <select id="sort" aria-label="Сортировка">
+      <option value="default">Без сортировки</option>
+      <option value="price-asc">Цена: сначала дешёвые</option>
+      <option value="price-desc">Цена: сначала дорогие</option>
+      <option value="rating">Сначала с высоким рейтингом</option>
+    </select>
+  </div>
+
+  <p class="count" id="count"></p>
+
+  <!-- Сюда JS вставит карточки -->
+  <ul class="grid" id="grid"></ul>
+
+  <!-- Сообщения о загрузке и ошибках -->
+  <div class="state" id="state"></div>
+
+</div>
+</body>
+</html>
